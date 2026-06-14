@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Claudio · 登录网易云</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0a0a0c; color: #e8e8e8;
+      font-family: system-ui, sans-serif;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      min-height: 100vh; gap: 20px;
+    }
+    h1 { font-size: 1.1rem; font-weight: 500; color: #aaa; }
+    #qr-box {
+      width: 200px; height: 200px;
+      background: #fff; border-radius: 12px; padding: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #qr-box img { width: 100%; height: 100%; display: block; }
+    #status { font-size: 0.9rem; color: #aaa; text-align: center; max-width: 260px; }
+    #status.ok  { color: #4caf50; }
+    #status.err { color: #f44336; }
+    button {
+      padding: 8px 24px; border-radius: 8px; border: none;
+      background: #333; color: #e8e8e8; cursor: pointer; font-size: 0.9rem;
+    }
+    button:hover { background: #444; }
+  </style>
+</head>
+<body>
+  <h1>用网易云 APP 扫码登录</h1>
+  <div id="qr-box"><span style="color:#999;font-size:12px">加载中…</span></div>
+  <p id="status">正在生成二维码…</p>
+  <button id="refreshBtn" style="display:none" onclick="start()">刷新二维码</button>
+
+  <script>
+    const qrBox    = document.getElementById('qr-box');
+    const statusEl = document.getElementById('status');
+    const refreshBtn = document.getElementById('refreshBtn');
+    let pollTimer  = null;
+
+    async function start() {
+      refreshBtn.style.display = 'none';
+      statusEl.className = '';
+      statusEl.textContent = '正在生成二维码…';
+      qrBox.innerHTML = '<span style="color:#999;font-size:12px">加载中…</span>';
+      clearInterval(pollTimer);
+
+      let data;
+      try {
+        const res = await fetch('/api/login/qr/start');
+        data = await res.json();
+      } catch (e) {
+        statusEl.className = 'err';
+        statusEl.textContent = '网络错误：' + e.message;
+        refreshBtn.style.display = '';
+        return;
+      }
+
+      if (data.error) {
+        statusEl.className = 'err';
+        statusEl.textContent = '获取失败：' + data.error;
+        refreshBtn.style.display = '';
+        return;
+      }
+
+      const img = new Image();
+      img.onload = () => {
+        qrBox.innerHTML = '';
+        qrBox.appendChild(img);
+        statusEl.textContent = '等待扫码…';
+        pollTimer = setInterval(() => poll(data.key), 2000);
+      };
+      img.onerror = () => {
+        statusEl.className = 'err';
+        statusEl.textContent = '二维码图片加载失败';
+        refreshBtn.style.display = '';
+      };
+      img.style.cssText = 'width:100%;height:100%;display:block;';
+      img.alt = 'QR';
+      img.src = data.qrimg;
+    }
+
+    async function poll(key) {
+      let data;
+      try {
+        const res = await fetch('/api/login/qr/check?key=' + key);
+        data = await res.json();
+      } catch { return; }
+
+      if (data.code === 800) {
+        clearInterval(pollTimer);
+        statusEl.className = 'err';
+        statusEl.textContent = '二维码已过期，请刷新';
+        refreshBtn.style.display = '';
+      } else if (data.code === 802) {
+        statusEl.textContent = '已扫码，请在手机上确认…';
+      } else if (data.code === 803) {
+        clearInterval(pollTimer);
+        statusEl.className = 'ok';
+        statusEl.textContent = '登录成功！正在跳转…';
+        setTimeout(() => location.href = '/', 1500);
+      }
+    }
+
+    start();
+  </script>
+</body>
+</html>

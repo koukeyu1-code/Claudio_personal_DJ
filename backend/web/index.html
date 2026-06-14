@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0a0c" />
+  <title>Claudio</title>
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="backdrop" id="backdrop"></div>
+  <main class="player">
+    <header class="player__head">
+      <div class="brand">Claudio</div>
+      <div class="status" id="status">连接中…</div>
+      <time class="clock" id="clock">--:--</time>
+    </header>
+
+    <div class="card-wrap">
+      <div class="glow" id="glow"></div>
+      <article class="card">
+        <div class="card__episode" id="episode" hidden></div>
+        <div class="card__meta" id="cardMeta">
+          <div class="cover-ph" id="coverPh" aria-hidden="true"></div>
+          <img class="card__cover" id="cover" alt="" hidden />
+          <div class="card__meta-text">
+            <h1 class="card__title" id="trackTitle">还没开台</h1>
+            <p class="card__sub" id="trackSub">跟我说句话，开始今天的电台</p>
+          </div>
+        </div>
+        <div class="card__progress">
+          <span id="elapsed">0:00</span>
+          <section class="wave" id="wave" aria-hidden="true">
+            <div class="wave__bars" id="bars"></div>
+          </section>
+          <span id="duration">0:00</span>
+        </div>
+      </article>
+    </div>
+
+    <div class="controls" id="controls">
+      <button class="ctrl-btn" id="btnPrev" aria-label="上一首" disabled>⏮</button>
+      <button class="ctrl-btn ctrl-btn--main is-paused" id="btnPause" aria-label="播放/暂停"></button>
+      <button class="ctrl-btn" id="btnNext" aria-label="下一首" disabled>⏭</button>
+    </div>
+
+    <div class="lyrics" id="lyrics">
+      <div class="lyrics__inner" id="lyricsInner"></div>
+    </div>
+
+    <ol class="chat" id="chat" aria-live="polite"></ol>
+
+    <footer class="composer">
+      <input id="input" type="text" placeholder="跟 Claudio 说点什么…" autocomplete="off" />
+      <button id="skipBtn" aria-label="换一批歌" title="换一批歌">🎲</button>
+    </footer>
+
+    <audio id="audio" preload="none"></audio>
+  </main>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

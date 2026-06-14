@@ -1,0 +1,20 @@
+{
+  "name": "claudio-backend",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Claudio - personal AI radio backend (vertical slice: chat -> llm -> ncm)",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --env-file=.env server.js",
+    "dev": "node --env-file=.env --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "msedge-tts": "^2.0.5",
+    "ws": "^8.20.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

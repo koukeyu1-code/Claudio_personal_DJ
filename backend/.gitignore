@@ -1,0 +1,12 @@
+node_modules/
+.env
+.env.local
+
+# all runtime/generated data is private: sqlite db, netease login cookie,
+# feishu oauth tokens, device location, synthesized TTS audio, test fixtures
+data/*
+!data/.gitkeep
+
+cache/
+*.log
+.DS_Store
