@@ -87,7 +87,7 @@ claudio/
 
   ```bash
   git clone https://github.com/Binaryify/NeteaseCloudMusicApi.git
-  cd NeteaseCloudMusicApi && npm i && npm start   # 默认 :3000
+  cd NeteaseCloudMusicApi && npm i && PORT=3001 npm start   # 默认 3000,改 3001 避免和 Next.js 等常见默认端口冲突
   ```
 
 ### 1. 配置环境变量
@@ -102,8 +102,8 @@ cp .env.example .env
 ```ini
 DEEPSEEK_API_KEY=你的-deepseek-key
 LISTENER_NAME=你的昵称        # DJ 怎么称呼你、聊天里显示的名字
-NCM_API_URL=http://localhost:3000
-# 可选：TTS 音色、天气固定坐标、飞书 App ID/Secret —— 见 .env.example 注释
+NCM_API_URL=http://localhost:3001
+# 若 3000 没被占用,上面也可写 3000；NCM 启动时的 PORT 要和这里一致
 ```
 
 再把两个个人档案模板复制成真实文件（真实文件已被 .gitignore 忽略，不会上传）：
