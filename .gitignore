@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.log
+.env
+claudio.db
+public/tts/*.mp3
+.DS_Store
