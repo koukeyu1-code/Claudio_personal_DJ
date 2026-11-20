@@ -125,7 +125,7 @@ export async function ask({ userMessage, history = [], context = {}, intent = 'c
   let data = null;
   for (let attempt = 1; attempt <= 2; attempt++) {
     const body = {
-      model: 'deepseek-v4-flash',
+      model: 'deepseek-flash',
       // V4 defaults to thinking mode (reasoning_content + content can come
       // back blank with json_object); we only need fast JSON output
       thinking: { type: 'disabled' },
