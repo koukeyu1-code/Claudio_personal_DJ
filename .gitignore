@@ -16,3 +16,5 @@ backend/prompts/user-routines.md
 *.log
 .DS_Store
 cache/
+.edge-profile/
+.chrome-app-profile/

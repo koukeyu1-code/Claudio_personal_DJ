@@ -156,13 +156,14 @@ DJ 从你的真实歌单里挑歌，所以要先把歌单导入数据库。
 
 ### 6. 一键启动
 
-**Windows**：仓库外层的 `启动 Claudio.bat` 会依次拉起 NeteaseCloudMusicApi + 后端并打开浏览器（按需改路径）；`claudio_launch.ps1` 为无窗口版（隐藏控制台 + Edge 独立窗口，关窗自动停台）。
+**Windows**：一键脚本已收录在 [`windows/`](windows/) —— 双击 `启动 Claudio.bat` 拉起全部服务并打开浏览器，或先运行 `生成桌面快捷方式.bat` 得到静默启动的桌面图标（关窗自动停台）。
 
 **macOS**：
-- `Claudio.app` —— 双击启动，**无任何终端窗口**：后台拉起两个服务，弹出**原生电台窗口**（WKWebView 壳，源码与重编译方式见 `Claudio.app/Contents/Resources/ClaudioRadio.swift`，不依赖浏览器），**关掉电台窗口即自动停止全部服务**；
+- `Claudio.app` —— 双击启动，**无任何终端窗口**：后台拉起两个服务，弹出**原生电台窗口**（WKWebView 壳，不依赖浏览器），**关掉电台窗口即自动停止全部服务**；
+- 源码与一键重建：`mac/` 目录（`ClaudioRadio.swift` 等），执行 `bash mac/build.sh` 即可重新生成外层的 `Claudio.app`；
 - `启动 Claudio.command` —— 调试用，终端可见日志，Ctrl+C 停止；
 - `停止 Claudio.command` —— 手动兜底停止。
-- 日志统一在 `/tmp/claudio-logs/`（ncm.log / backend.log）。
+- 日志统一在 `/tmp/claudio-logs/`（ncm.log / backend.log / launcher.log）。
 
 ---
 
